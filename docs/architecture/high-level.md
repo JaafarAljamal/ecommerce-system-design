@@ -13,10 +13,44 @@
 - **API Gateway** — Auth, routing, rate limiting
 - **Microservices** — Independent, horizontally scalable services
 
-## Services (TBD)
+## Services
 - User Service
 - Product Service
+- Order Service
 - Payment Service
-- Shipping Service
+- Cart Service
+- Review Service
 - Notification Service
+- Shipping Service
 
+## Architecture Diagram
+
+```mermaid
+graph TD
+    Client(["Client (Browser)"])
+    LB["Load Balancer"]
+    GW["API Gateway\nAuth · Routing · Rate Limiting"]
+
+    US["User Service"]
+    PS["Product Service"]
+    OS["Order Service"]
+    PAY["Payment Service"]
+    CS["Cart Service"]
+    RS["Review Service"]
+    NS["Notification Service"]
+    SS["Shipping Service"]
+
+    DB[("Databases\nPer-service DB + Redis")]
+    EXT_PAY["Payment Gateway\nStripe · PayPal"]
+    EXT_SHIP["Shipping API\nDHL · FedEx"]
+
+    Client --> LB --> GW
+    GW --> US & PS & OS & PAY & CS & RS & NS & SS
+    US & PS & OS & PAY & CS & RS & NS & SS --> DB
+    PAY --> EXT_PAY
+    SS --> EXT_SHIP
+```
+
+## External Systems
+- **Payment Gateway** — Stripe, PayPal
+- **Shipping API** — DHL, FedEx
