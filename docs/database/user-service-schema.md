@@ -57,3 +57,12 @@ erDiagram
     CUSTOMERS ||--o{ ADDRESSES : "has"
 ```
 
+## Seller Status Values
+
+|      Status        |      Description                                               |
+|----------------|-------------------------------------------------|
+| `pending`       |   Registered, awaiting admin approval       |
+| `active`           |   Approval and operational                          |
+| `suspended`  |   Frozen by admin due to policy violation  |
+| `inactive`       |   Deactivated by seller                                   |
+
