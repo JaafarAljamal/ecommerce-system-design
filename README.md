@@ -22,3 +22,8 @@ src/ # Java Implementation
 ## Status
 
 In Progress
+
+## Architecture Diagram
+
+![Architecture](docs/architecture/architecture.png)
+
