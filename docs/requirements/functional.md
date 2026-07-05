@@ -137,7 +137,9 @@ cancelled / returned / refunded
 ---
 
 ## 7. Return & Dispute Management
-> **Maps to:** Return Service + Support Service
+> **Maps to:** Return Service (returns) + Dispute Service (escalations)
+
+> Note: Support Service owns Tickets (complaints/suggestions) — Disputes are a separate context
 
 ### Customer
 - Can request return for defective or unsatisfactory products within 7 days of delivery
@@ -353,19 +355,38 @@ cancelled / returned / refunded
 
 ---
 
-## 18. Domain Events
+## 18. Media Management
+> **Maps to:** Media Context (shared file storage for products, reviews, verification documents, user avatars)
+
+- Platform provides centralized file upload, storage, and retrieval
+- Supports image and document types (JPEG, PNG, PDF)
+- Generates CDN-backed URLs from storage keys
+- Used by: Catalog (product images), Review (review media), Identity (avatars, verification documents)
+
+---
+
+## 19. Configuration & Feature Flags
+> **Cross-Cutting Concern**
+
+- Admin can manage platform-wide settings (default commission rate, tax rules)
+- Admin can enable or disable features per region or seller tier (feature flags)
+
+---
+
+## 20. Domain Events
 > Core events published across the platform. Consumed by Wallet, Notification, Analytics, Fraud, and Search Contexts.
 
 | Event | Published By | Consumed By |
 |-------|--------------|--------------|
 | `user.registered` | Identity | Notification, Analytics |
-| `seller.approved` | Identity | Notification, Catalog |
+| `seller.approved` | Seller | Notification, Catalog |
 | `seller.verification.expired` | Identity | Notification, Fraud |
 | `product.submitted` | Catalog | Notification |
 | `product.approved` | Catalog | Notification, Search |
 | `product.rejected` | Catalog | Notification |
 | `cart.abandoned` | Cart | Notification, Analytics |
-| `order.placed` | Order | Inventory, Notification, Analytics, Fraud |
+| `order.placed` | Order | Notification, Analytics, Fraud |
+| `inventory.reserved` | Inventory | Order (sync REST — not via Kafka) |
 | `order.paid` | Order | Wallet, Notification |
 | `order.shipped` | Order | Notification |
 | `order.delivered` | Order | Wallet, Review, Notification |
@@ -377,18 +398,8 @@ cancelled / returned / refunded
 | `review.submitted` | Review | Catalog, Notification |
 | `dispute.opened` | Support | Notification, Fraud |
 
-## 19. Media Management
-> **Maps to:** Media Context (shared file storage for products, reviews, verification documents, user avatars)
+> **Note:** Inventory reservation occurs via synchronous REST call during checkout
+> (Order → Inventory) to prevent overselling. This is intentionally NOT event-driven.
 
-- Platform provides centralized file upload, storage, and retrieval
-- Supports image and document types (JPEG, PNG, PDF)
-- Generates CDN-backed URLs from storage keys
-- Used by: Catalog (product images), Review (review media), Identity (avatars, verification documents)
-
-## 20. Configuration & Feature Flags
-> **Cross-Cutting Concern**
-
-- Admin can manage platform-wide settings (default commission rate, tax rules)
-- Admin can enable or disable features per region or seller tier (feature flags)
-
+---
 
