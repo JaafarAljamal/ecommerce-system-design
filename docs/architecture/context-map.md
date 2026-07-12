@@ -76,8 +76,8 @@
 ## Internal Context Relationships
 
 ### Identity → Seller
-**Relationship:** Customer/Supplier
-**Integration:** OHS (REST) + PL (Kafka)
+**Relationship:** Customer/Supplier  
+**Integration:** OHS (REST) + PL (Kafka)  
 ```
 Identity (Upstream/Supplier)
     ├── REST API: verify user existence
@@ -91,8 +91,8 @@ Seller (Downstream/Customer)
 ---
 
 ### Identity → All Contexts (Authentication)
-**Relationship:** Customer/Supplier (token authority)
-**Integration:** OHS (JWT issuer) + PL (Kafka)
+**Relationship:** Customer/Supplier (token authority)  
+**Integration:** OHS (JWT issuer) + PL (Kafka)  
 ```
 Clients → Identity REST API (authenticate)
 Identity → issues JWT with roles and permission claims
@@ -106,8 +106,8 @@ All Contexts → validate token locally; apply own authorization rules
 ---
 
 ### Seller → Catalog
-**Relationship:** Customer/Supplier
-**Integration:** PL (Kafka)
+**Relationship:** Customer/Supplier  
+**Integration:** PL (Kafka)  
 ```
 Seller (Upstream/Supplier)
     └── Kafka → EventBus: seller.approved, seller.suspended, seller.updated
@@ -118,8 +118,8 @@ Catalog (Downstream/Customer)
 ---
 
 ### Configuration → All Contexts
-**Relationship:** Customer/Supplier (settings authority)
-**Integration:** OHS (REST) + PL (Kafka via EventBus)
+**Relationship:** Customer/Supplier (settings authority)  
+**Integration:** OHS (REST) + PL (Kafka via EventBus)  
 ```
 Configuration (Upstream)
     ├── REST API: initial settings fetch on service startup or on-demand
@@ -135,8 +135,8 @@ All Contexts (Downstream)
 ---
 
 ### Catalog → Search
-**Relationship:** Event Collaboration
-**Integration:** PL (Kafka) + PROJ
+**Relationship:** Event Collaboration  
+**Integration:** PL (Kafka) + PROJ  
 ```
 Catalog (Upstream — event publisher)
     └── Kafka → EventBus: product.created, product.updated, product.deleted
@@ -151,8 +151,8 @@ Search (Downstream — Projection)
 ---
 
 ### Review → Catalog (Rating Projection)
-**Relationship:** Event Collaboration
-**Integration:** PL (Kafka) + PROJ
+**Relationship:** Event Collaboration  
+**Integration:** PL (Kafka) + PROJ  
 ```
 Review (Upstream — event publisher)
     └── Kafka → EventBus: review.submitted, review.removed
@@ -164,8 +164,8 @@ Catalog (Downstream — Projection)
 ---
 
 ### Review → Seller (Rating Projection)
-**Relationship:** Event Collaboration
-**Integration:** PL (Kafka) + PROJ
+**Relationship:** Event Collaboration  
+**Integration:** PL (Kafka) + PROJ  
 ```
 Review (Upstream — event publisher)
     └── Kafka → EventBus: seller.review.submitted, seller.review.removed
@@ -176,8 +176,8 @@ Seller (Downstream — Projection)
 ---
 
 ### Review → Search
-**Relationship:** Event Collaboration
-**Integration:** PL (Kafka) + PROJ
+**Relationship:** Event Collaboration  
+**Integration:** PL (Kafka) + PROJ  
 ```
 Review (Upstream — event publisher)
     └── Kafka → EventBus: review.submitted
@@ -188,8 +188,8 @@ Search (Downstream — Projection)
 ---
 
 ### Promotion → Catalog (Discount Projection)
-**Relationship:** Event Collaboration
-**Integration:** PL (Kafka) + PROJ
+**Relationship:** Event Collaboration  
+**Integration:** PL (Kafka) + PROJ  
 ```
 Promotion (Upstream — event publisher)
     └── Kafka → EventBus: promotion.activated, promotion.deactivated
@@ -200,8 +200,8 @@ Catalog (Downstream — Projection)
 ---
 
 ### Promotion → Search
-**Relationship:** Event Collaboration
-**Integration:** PL (Kafka) + PROJ
+**Relationship:** Event Collaboration  
+**Integration:** PL (Kafka) + PROJ  
 ```
 Promotion (Upstream — event publisher)
     └── Kafka → EventBus: promotion.activated
@@ -212,8 +212,8 @@ Search (Downstream — Projection)
 ---
 
 ### Promotion → Order
-**Relationship:** Customer/Supplier
-**Integration:** OHS (REST)
+**Relationship:** Customer/Supplier  
+**Integration:** OHS (REST)  
 ```
 Order (Downstream/Customer)
     └── REST API: validate and apply coupon at checkout
@@ -223,8 +223,8 @@ Promotion (Upstream/Supplier — OHS)
 ---
 
 ### Seller → Search
-**Relationship:** Event Collaboration
-**Integration:** PL (Kafka) + PROJ
+**Relationship:** Event Collaboration  
+**Integration:** PL (Kafka) + PROJ  
 ```
 Seller (Upstream — event publisher)
     └── Kafka → EventBus: seller.updated, seller.rating.updated
@@ -235,8 +235,8 @@ Search (Downstream — Projection)
 ---
 
 ### Catalog → Cart
-**Relationship:** Customer/Supplier
-**Integration:** OHS (REST)
+**Relationship:** Customer/Supplier  
+**Integration:** OHS (REST)  
 ```
 Catalog (Upstream/Supplier — OHS)
     └── REST API: product details, wishlist-to-cart transfer
@@ -246,8 +246,8 @@ Cart (Downstream/Customer)
 ---
 
 ### Cart → Order
-**Relationship:** Customer/Supplier
-**Integration:** OHS (REST — snapshot)
+**Relationship:** Customer/Supplier  
+**Integration:** OHS (REST — snapshot)  
 ```
 Cart (Supporting Domain — snapshot supplier)
     └── REST API: cart snapshot at checkout
@@ -260,8 +260,8 @@ Order (Core Domain — owns checkout model)
 ---
 
 ### Order → Inventory
-**Relationship:** Customer/Supplier
-**Integration:** OHS (REST — command)
+**Relationship:** Customer/Supplier  
+**Integration:** OHS (REST — command)  
 ```
 Order (Downstream/Customer)
     └── REST API: reserve stock / deduct stock
@@ -271,8 +271,8 @@ Inventory (Upstream/Supplier — OHS)
 ---
 
 ### Order → Payment
-**Relationship:** Customer/Supplier
-**Integration:** OHS (REST — command)
+**Relationship:** Customer/Supplier  
+**Integration:** OHS (REST — command)  
 ```
 Order (Downstream/Customer — orchestrator)
     └── REST API: initiate payment authorization
@@ -287,8 +287,8 @@ Payment (Upstream/Supplier — OHS)
 ---
 
 ### Payment → External Gateways
-**Relationship:** ACL (external system)
-**Integration:** ACL (per-provider adapter)
+**Relationship:** ACL (external system)  
+**Integration:** ACL (per-provider adapter)  
 ```
 Payment Service (internal domain model)
     └── ACL adapters:
@@ -302,8 +302,8 @@ External Gateways
 ---
 
 ### Payment → Wallet
-**Relationship:** Event Collaboration
-**Integration:** PL (Kafka)
+**Relationship:** Event Collaboration  
+**Integration:** PL (Kafka)  
 ```
 Payment (Upstream — event publisher)
     └── Kafka → EventBus:
@@ -318,8 +318,8 @@ Payment (Upstream — event publisher)
 ---
 
 ### Payment → Notification
-**Relationship:** Event Collaboration
-**Integration:** PL (Kafka) + IT
+**Relationship:** Event Collaboration  
+**Integration:** PL (Kafka) + IT  
 ```
 Payment (Upstream)
     └── Kafka → EventBus: payment.captured, payment.failed
@@ -330,8 +330,8 @@ Notification (Downstream — EC + IT)
 ---
 
 ### Order → Shipping
-**Relationship:** Customer/Supplier
-**Integration:** OHS (REST — command)
+**Relationship:** Customer/Supplier  
+**Integration:** OHS (REST — command)  
 ```
 Order (Downstream/Customer)
     └── REST API: create shipment after payment.captured
@@ -341,8 +341,8 @@ Shipping (Upstream/Supplier — OHS)
 ---
 
 ### Shipping → External Providers
-**Relationship:** ACL (external system)
-**Integration:** ACL (per-provider adapter)
+**Relationship:** ACL (external system)  
+**Integration:** ACL (per-provider adapter)  
 ```
 Shipping Service (internal domain model)
     └── ACL adapters:
@@ -354,8 +354,8 @@ Shipping Service (internal domain model)
 ---
 
 ### Order → Review
-**Relationship:** Event Collaboration
-**Integration:** PL (Kafka)
+**Relationship:** Event Collaboration  
+**Integration:** PL (Kafka)  
 ```
 Order (Upstream — event publisher)
     └── Kafka → EventBus: order.delivered
@@ -366,8 +366,8 @@ Review (Downstream — event consumer)
 ---
 
 ### Review Moderation (Seller → Admin → Review)
-**Relationship:** Event Collaboration + Customer/Supplier
-**Integration:** OHS (REST) + PL (Kafka)
+**Relationship:** Event Collaboration + Customer/Supplier  
+**Integration:** OHS (REST) + PL (Kafka)  
 ```
 Seller → REST → Review: report abusive review
 Review → Kafka → EventBus: review.reported
@@ -382,8 +382,8 @@ Notification → notifies Seller of Admin decision
 ---
 
 ### Order → Return
-**Relationship:** Customer/Supplier
-**Integration:** OHS (REST)
+**Relationship:** Customer/Supplier  
+**Integration:** OHS (REST)  
 ```
 Return (Downstream/Customer)
     └── REST API: validate order eligibility for return
@@ -393,8 +393,8 @@ Order (Upstream/Supplier — OHS)
 ---
 
 ### Return → Wallet
-**Relationship:** Event Collaboration
-**Integration:** PL (Kafka)
+**Relationship:** Event Collaboration  
+**Integration:** PL (Kafka)  
 ```
 Return (Upstream)
     └── Kafka → EventBus: return.approved
@@ -405,8 +405,8 @@ Wallet (Downstream — event consumer)
 ---
 
 ### Return → Notification
-**Relationship:** Event Collaboration
-**Integration:** PL (Kafka) + IT
+**Relationship:** Event Collaboration  
+**Integration:** PL (Kafka) + IT  
 ```
 Return (Upstream)
     └── Kafka → EventBus: return.approved, return.rejected
@@ -416,8 +416,8 @@ Notification (Downstream — EC + IT)
 ---
 
 ### Return → Dispute
-**Relationship:** Customer/Supplier
-**Integration:** OHS (REST)
+**Relationship:** Customer/Supplier  
+**Integration:** OHS (REST)  
 ```
 Return (Downstream/Customer)
     └── REST API: escalate rejected return
@@ -427,8 +427,8 @@ Dispute (Upstream/Supplier — OHS)
 ---
 
 ### Shipping → Dispute
-**Relationship:** Customer/Supplier
-**Integration:** OHS (REST)
+**Relationship:** Customer/Supplier  
+**Integration:** OHS (REST)  
 ```
 Shipping (Downstream/Customer)
     └── REST API: escalate lost/damaged shipment
@@ -438,8 +438,8 @@ Dispute (Upstream/Supplier — OHS)
 ---
 
 ### Payment → Dispute
-**Relationship:** Customer/Supplier
-**Integration:** OHS (REST)
+**Relationship:** Customer/Supplier  
+**Integration:** OHS (REST)  
 ```
 Payment (Downstream/Customer)
     └── REST API: escalate payment issue
@@ -449,8 +449,8 @@ Dispute (Upstream/Supplier — OHS)
 ---
 
 ### All Contexts → Notification
-**Relationship:** Event Collaboration
-**Integration:** PL (Kafka) + IT
+**Relationship:** Event Collaboration  
+**Integration:** PL (Kafka) + IT  
 ```
 All Contexts → Kafka → EventBus → Notification Service
     ├── consumes events via Published Language (no model dependency)
@@ -466,8 +466,8 @@ All Contexts → Kafka → EventBus → Notification Service
 ---
 
 ### All Contexts → Analytics
-**Relationship:** Event Collaboration
-**Integration:** PL (Kafka) + PROJ + Aggregation
+**Relationship:** Event Collaboration  
+**Integration:** PL (Kafka) + PROJ + Aggregation  
 ```
 All Contexts → Kafka → EventBus → Analytics Service
     ├── Projection: purpose-built read models per domain
@@ -479,8 +479,8 @@ All Contexts → Kafka → EventBus → Analytics Service
 ---
 
 ### All Contexts → Fraud
-**Relationship:** Event Collaboration
-**Integration:** PL (Kafka) + PROJ
+**Relationship:** Event Collaboration  
+**Integration:** PL (Kafka) + PROJ  
 ```
 Security- and commerce-relevant Contexts → Kafka → EventBus → Fraud Service
     └── Projection: risk models per entity
@@ -491,8 +491,8 @@ Security- and commerce-relevant Contexts → Kafka → EventBus → Fraud Servic
 > Fraud does NOT subscribe to operational events (SEO updates, template changes, etc.)
 
 ### Fraud → Identity / Order
-**Relationship:** Customer/Supplier
-**Integration:** OHS (REST) + PL (Kafka → Notification)
+**Relationship:** Customer/Supplier  
+**Integration:** OHS (REST) + PL (Kafka → Notification)  
 ```
 Fraud (risk authority)
     ├── REST → Identity: trigger account lock
@@ -503,8 +503,8 @@ Fraud (risk authority)
 ---
 
 ### All Contexts → Media
-**Relationship:** Customer/Supplier
-**Integration:** OHS (REST)
+**Relationship:** Customer/Supplier  
+**Integration:** OHS (REST)  
 ```
 Media Service (System of Record for binary assets — OHS)
     └── REST API: upload, retrieve, delete, version files
